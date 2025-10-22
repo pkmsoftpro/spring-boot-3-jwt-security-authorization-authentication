@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "94833981-3cee-46f3-8db5-f4d38bb09072",
+		"name": "Spring JWT Authorization",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2944090"
+	},
+	"item": [
+		{
+			"name": "register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response body is not empty",
+							"if (pm.response.text() && pm.response.text().trim() !== \"\") {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Check if the access token exists in the response",
+							"    if (jsonData && jsonData.access_token) {",
+							"        // Set the global variable named \"accessToken\" with the retrieved token",
+							"        pm.globals.set(\"accessToken\", jsonData.access_token);",
+							"        console.log(\"Access token stored in global variable: \" + jsonData.access_token);",
+							"    } else {",
+							"        console.log(\"Access token not found in the response.\");",
+							"    }",
+							"} else {",
+							"    console.log(\"Response body is empty. No JSON to parse.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n//     \"firstname\":\"admin_user1\",\n//     \"lastname\":\"adminUser1ln\",\n//     \"email\":\"adminuser1@email\",\n//     \"password\":\"password\",\n//     \"role\":\"admin:read\"\n// }\n\n{\n    \"firstname\":\"user2\",\n    \"lastname\":\"user2lname\",\n    \"email\":\"user2@email\",\n    \"password\":\"user1\",\n    \"role\": [\"ROLE_USER\", \"ROLE_ADMIN\"]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin-authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response body",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Check if the access token exists in the response",
+							"if (jsonData && jsonData.access_token) {",
+							"    // Set the global variable named \"accessToken\" with the retrieved token",
+							"    pm.globals.set(\"accessToken\", jsonData.access_token);",
+							"    pm.globals.set(\"refreshToken\", jsonData.refresh_token);",
+							"    console.log(\"Access token stored in global variable: \" + jsonData.access_token);",
+							"} else {",
+							"    console.log(\"Access token not found in the response.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"email\":\"admin@mail.com\",\n    \"password\":\"password\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response body",
+							"var jsonData = pm.response.json();",
+							"",
+							"// Check if the access token exists in the response",
+							"if (jsonData && jsonData.access_token) {",
+							"    // Set the global variable named \"accessToken\" with the retrieved token",
+							"    pm.globals.set(\"accessToken\", jsonData.access_token);",
+							"    pm.globals.set(\"refreshToken\", jsonData.refresh_token);",
+							"    console.log(\"Access token stored in global variable: \" + jsonData.access_token);",
+							"} else {",
+							"    console.log(\"Access token not found in the response.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"email\":\"user2@email\",\n    \"password\":\"user1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response body is not empty",
+							"if (pm.response.text() && pm.response.text().trim() !== \"\") {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // Check if the access token exists in the response",
+							"    if (jsonData && jsonData.access_token) {",
+							"        // Set the global variable named \"accessToken\" with the retrieved token",
+							"        pm.globals.set(\"accessToken\", jsonData.access_token);",
+							"        console.log(\"Access token stored in global variable: \" + jsonData.access_token);",
+							"    } else {",
+							"        console.log(\"Access token not found in the response.\");",
+							"    }",
+							"} else {",
+							"    console.log(\"Response body is empty. No JSON to parse.\");",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"user2@email\",\n    \"password\":\"user1\"\n}\n\n\n// {\n\n//     \"email\":\"admin@mail.com\",\n//     \"password\":\"password\"\n// }"
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/v1/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

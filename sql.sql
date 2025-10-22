@@ -1,0 +1,11 @@
+ALTER SESSION SET CURRENT_SCHEMA = machine;
+
+drop table USERS_AUTHENTICATION_TBL;
+drop table token;
+
+select * from USERS_AUTHENTICATION_TBL;
+
+delete from USERS_AUTHENTICATION_TBL where id in (52);
+
+ALTER TABLE USERS_AUTHENTICATION_TBL
+ADD CONSTRAINT unique_user_email UNIQUE (email);
